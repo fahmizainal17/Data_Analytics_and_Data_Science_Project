@@ -1,0 +1,27 @@
+Student ID,Major,Subject,Score
+1,Arts,Mathematics,75.0
+2,Arts,Mathematics,66.0
+3,Science,Mathematics,78.0
+4,Science,Mathematics,66.0
+5,Science,Mathematics,72.0
+1,Arts,English,85.0
+2,Arts,English,90.0
+3,Science,English,75.0
+4,Science,English,87.0
+5,Science,English,79.0
+1,Arts,History,69.0
+2,Arts,History,74.0
+3,Science,History,82.0
+4,Science,History,94.0
+5,Science,History,84.0
+1,Arts,Geography,82.0
+2,Arts,Geography,56.0
+3,Science,Physics,80.0
+4,Science,Physics,68.0
+5,Science,Physics,75.0
+3,Science,Chemistry,75.0
+4,Science,Chemistry,82.0
+5,Science,Chemistry,66.0
+3,Science,Biology,86.0
+4,Science,Biology,54.0
+5,Science,Biology,60.0

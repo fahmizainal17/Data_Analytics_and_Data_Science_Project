@@ -1,0 +1,56 @@
+-- Homework 3 - Combining Data with JOINs
+-- Q1. Which region saw the most returned items? For what reasons?
+select 	g.region, sum(r.return_quantity)
+from 		orders o
+		JOIN regions g ON o.region_id = g.region_id
+		JOIN returns r ON o.order_id = r.order_id
+group by	g.region
+limit 	1;
+
+-- Q2. What product was returned most often? (products)
+select 	p.product_name, sum(r.return_quantity)
+from 		orders o
+		JOIN products p ON o.product_id = p.product_id
+		JOIN returns r ON o.order_id = r.order_id
+group by	p.product_name
+order by	2 DESC
+limit 	1;
+
+-- Q3. 	Which of our “top vendors” (3M, Apple, Avery, Cisco, Epson, Hewlett-
+--		Packard (HP, Hewlett Packard), Logitech, Panasonic, Samsung, and Xerox)
+--		saw the most returns?
+select	total_returned_quantity, vendor
+from		(
+		select	sum(r.return_quantity) as total_returned_quantity, 
+				case
+					when p.product_name LIKE '%3M%' then '3M'
+					when p.product_name LIKE '%Apple%' then 'Apple'
+					when p.product_name LIKE '%Avery%' then 'Avery'
+					when p.product_name LIKE '%Cisco%' then 'Cisco'
+					when p.product_name LIKE '%Epson%' then 'Epson'
+					when p.product_name LIKE '%Hewlett-Packard%' then 'Hewlett-Packard'
+					when p.product_name LIKE '%Logitech%' then 'Logitech'
+					when p.product_name LIKE '%Panasonic%' then 'Panasonic'
+					when p.product_name LIKE '%Samsung%' then 'Samsung'
+					when p.product_name LIKE '%Xerox%' then 'Xerox'
+					else 'Others'
+				end as vendor
+		from 		orders o
+				JOIN products p ON o.product_id = p.product_id
+				JOIN returns r ON o.order_id = r.order_id
+		group by	2
+		order by	1
+		limit		9
+		) 	as temp
+order by	1 	DESC
+limit		1;
+
+-- Q4. Which product is most profitable with the consumer segment?
+select 	p.product_name, sum(o.profit) as total_profit
+from 		orders o
+		JOIN products p ON o.product_id = p.product_id
+		JOIN customers c ON o.customer_id = c.customer_id
+where		c.segment = 'Consumer'
+group by	p.product_name
+order by	2 DESC
+limit 	1;

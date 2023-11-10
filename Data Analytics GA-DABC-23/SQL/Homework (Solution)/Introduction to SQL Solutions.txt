@@ -1,0 +1,32 @@
+-- Homework 1 - Introduction to SQL
+-- Q1. Which products are made by Xerox?
+select	distinct product_name
+from		public.products
+where 	product_name ILIKE '%xerox%';
+
+-- Q2. How many countries are in our Western Europe sub-region?
+select 	distinct count(country)
+from		public.regions
+where		sub_region = 'Western Europe';
+
+-- Q3. How many customers in our consumer segment have names that start with the letter “S”?
+select	count (distinct (customer_name))
+from		public.customers
+where 	segment = 'Consumer'
+and		customer_name LIKE 'S%';
+
+-- Q4. What is the total number of items (not orders) returned with some reason given?
+select	sum(return_quantity)
+from		public.returns
+where		reason_returned != 'Not Given';
+
+-- Q5. How many orders used Standard Shipping and a discount code?
+select	count(*)
+from		public.orders
+where		ship_mode = 'Standard Class'
+and		discount IS NOT NULL;
+
+
+
+
+

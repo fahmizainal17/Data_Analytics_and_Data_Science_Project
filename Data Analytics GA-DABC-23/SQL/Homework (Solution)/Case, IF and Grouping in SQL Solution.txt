@@ -1,0 +1,40 @@
+-- Homework 2 - Case in SQL and Grouping in SQL
+-- Q1. Do our customers prefer a certain type of shipping class? Find the number of orders per ship mode.
+select	ship_mode, count(*)
+from		public.orders
+group by	ship_mode;
+
+-- Q2. 	How many unique salespeople do we have employed in each region? 
+-- 		How does that compare to the number of unique countries in each region?
+select	region, count (distinct (salesperson)) as unique_salespeople, count (distinct (country)) as unique_country
+from		public.regions
+group by	region;
+
+-- Q3. Find the most popular reason for returns.
+select	reason_returned, sum(return_quantity) as total_return_quantity
+from		public.returns
+group by	reason_returned
+order by	2 DESC
+limit		1;
+
+-- Q4. 	Bonus: Create a query that groups the total number of products available by vendor.
+--  	The vendors we want to focus on are 3M, Apple, Avery, Cisco, Epson, Hewlett-
+-- 		Packard (HP, Hewlett Packard), Logitech, Panasonic, Samsung, and Xerox.
+select	count(*) as total_no_of_products, 
+		case
+			when product_name LIKE '%3M%' then '3M'
+			when product_name LIKE '%Apple%' then 'Apple'
+			when product_name LIKE '%Avery%' then 'Avery'
+			when product_name LIKE '%Cisco%' then 'Cisco'
+			when product_name LIKE '%Epson%' then 'Epson'
+			when product_name LIKE '%Hewlett-Packard%' then 'Hewlett-Packard'
+			when product_name LIKE '%Logitech%' then 'Logitech'
+			when product_name LIKE '%Panasonic%' then 'Panasonic'
+			when product_name LIKE '%Samsung%' then 'Samsung'
+			when product_name LIKE '%Xerox%' then 'Xerox'
+			else 'Others'
+		end as vendor
+from		public.products
+group by	vendor
+order by	1
+limit		10;

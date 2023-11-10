@@ -1,0 +1,42 @@
+-- Homework 4 - Subqueries in SQL
+-- Question 1: Has our sales organization grown over the years?
+select 
+	year, 
+	count(distinct salesperson)
+from
+	(select 
+		DATE_PART('year',order_date) as year, 
+		salesperson
+	from orders o 
+	join regions r on o.region_id = r.region_id) salesperson_by_year
+group by year
+
+-- Q2. On average, what percent of salespeople make a sale each month?
+select	avg(salespeople_percent_sale)
+from		(
+		select	order_month, round((no_of_salespeople / 15.0),2) as salespeople_percent_sale
+		from		(
+				select 	DATE_TRUNC('month', o.order_date) as order_month, count (distinct(salesperson)) as no_of_salespeople
+				from 		orders o
+						JOIN regions g ON o.region_id = g.region_id
+				group by	order_month
+				) 	as temp
+		) 	as temp1;
+
+-- Q3. What percent of all sales in the United States did returns make up in 2019?
+select	(
+		select	sum(o.sales) as return_total_sales
+		from		orders o
+				JOIN regions g on o.region_id = g.region_id
+		where		order_id IN
+				(
+				select	order_id
+				from		public.returns
+				)
+		and		country = 'United States'
+		and		DATE_PART('year', o.order_date) = '2019'
+		)/sum(sales)*100 as return_percent_sale_United_States
+from		orders o
+		JOIN regions g on o.region_id = g.region_id
+where		DATE_PART('year', order_date) = '2019'
+and		country = 'United States';
