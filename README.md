@@ -1,7 +1,6 @@
 # Data-Analytics-and-Data-Science-Notes
-# Data Analytics and Data Science Showcase
 
-This repository serves as a consolidated documentation archive for the bootcamp.
+This repository serves as a consolidated documentation archive for the bootcamp by General Assembly.
 
 ## Title: Unveiling the Power of Data Analytics and Data Science
 
